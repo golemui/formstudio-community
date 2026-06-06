@@ -1,0 +1,50 @@
+{
+  "name": "formstudio-community",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "dev": "npm run cf-typegen && concurrently -k -n angular,worker -c cyan,yellow \"ng serve --proxy-config proxy.conf.json\" \"wrangler dev --config wrangler.api.jsonc --port 8787\"",
+    "build": "ng build",
+    "test": "ng test",
+    "cf-typegen": "wrangler types",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src"
+  },
+  "private": true,
+  "packageManager": "npm@11.5.1",
+  "dependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/platform-browser": "^21.2.0",
+    "@angular/router": "^21.2.0",
+    "@anthropic-ai/sdk": "^0.100.1",
+    "@golemui/gui-angular": "^0.16.2",
+    "@golemui/gui-mcp": "^0.16.2",
+    "@google/generative-ai": "^0.24.1",
+    "buffer": "^6.0.3",
+    "hono": "^4.12.22",
+    "monaco-editor": "^0.55.1",
+    "rxjs": "~7.8.0",
+    "snarkdown": "^2.0.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.2.11",
+    "@angular/cli": "^21.2.11",
+    "@angular/compiler-cli": "^21.2.0",
+    "@types/node": "^20.19.41",
+    "concurrently": "^9.2.1",
+    "jsdom": "^28.0.0",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8",
+    "wrangler": "^4.94.0",
+    "xhr2": "^0.2.1"
+  },
+  "optionalDependencies": {
+    "@emnapi/core": "^1.10.0",
+    "@emnapi/wasi-threads": "^1.2.1"
+  }
+}

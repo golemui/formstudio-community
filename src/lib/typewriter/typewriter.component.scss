@@ -1,0 +1,19 @@
+:host {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.typewriter-cursor {
+  margin-left: 1px;
+  animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

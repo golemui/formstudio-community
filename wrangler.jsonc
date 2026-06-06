@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "formstudio-community",
+  "compatibility_date": "2026-05-23",
+  "main": "./src/api/community/index.ts",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist/browser",
+    "not_found_handling": "single-page-application",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "upload_source_maps": true,
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+}
