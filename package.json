@@ -5,6 +5,7 @@
     "ng": "ng",
     "dev": "npm run cf-typegen && concurrently -k -n angular,worker -c cyan,yellow \"ng serve --proxy-config proxy.conf.json\" \"wrangler dev --config wrangler.api.jsonc --port 8787\"",
     "build": "ng build",
+    "deploy": "npm run build && wrangler deploy",
     "test": "ng test",
     "cf-typegen": "wrangler types",
     "format": "prettier --write src",
