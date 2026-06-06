@@ -22,7 +22,6 @@
     "@anthropic-ai/sdk": "^0.100.1",
     "@golemui/gui-angular": "^0.16.2",
     "@golemui/gui-mcp": "^0.16.2",
-    "@google/generative-ai": "^0.24.1",
     "buffer": "^6.0.3",
     "hono": "^4.12.22",
     "monaco-editor": "^0.55.1",
