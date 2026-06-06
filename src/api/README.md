@@ -8,8 +8,8 @@ Shared with other projects.
 > exported symbols are a public contract -- any change is a breaking change for
 > every downstream consumer.
 
-| File               | Purpose                                               |
-| ------------------ | ----------------------------------------------------- |
-| `chat-handler.ts`  | Core SSE streaming handler for `/api/chat`            |
-| `golem-prompt.ts`  | System prompt and message-building utilities          |
-| `index.ts`         | Cloudflare Worker entry point                         |
+| File              | Purpose                                      |
+| ----------------- | -------------------------------------------- |
+| `chat-handler.ts` | Core SSE streaming handler for `/api/chat`   |
+| `golem-prompt.ts` | System prompt and message-building utilities |
+| `index.ts`        | Cloudflare Worker entry point                |
