@@ -201,22 +201,6 @@
   }
 }
 
-.quota-error-bubble {
-  background-color: #1a0909;
-  border: 1px solid #ef4444;
-  border-left: 3px solid #ef4444;
-
-  .quota-error-header {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #ef4444;
-    margin-bottom: 8px;
-  }
-}
-
 .thinking-toggle {
   background: none;
   border: 1px solid #475569;

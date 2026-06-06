@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import * as Core from '@golemui/core';
 import { FormComponent as GuiFormComponent } from '@golemui/gui-angular';
 import { Dependencies, golemForm } from '@golemui/gui-shared';
-import { AiService, ChatHistoryEntry, FileAttachment, QuotaInfo, StreamEvent } from '../ai.service';
+import { AiService, ChatHistoryEntry, FileAttachment, StreamEvent } from '../ai.service';
 import { DesignComponent } from '../design/design.component';
 import { PropertiesPanelComponent } from '../design/properties-panel.component';
 import { EditorComponent } from '../editor/editor.component';
@@ -30,7 +30,6 @@ interface AttachedFile {
 interface ChatMessage {
   role: 'user' | 'assistant' | 'thinking' | 'tool_call';
   content: string;
-  isQuotaError?: boolean;
   toolInput?: Record<string, unknown>;
   toolErrors?: string[];
   thinkingGroupId?: number;
@@ -70,7 +69,7 @@ const initialFormJson = () => {
     EditorComponent,
     TypewriterComponent,
   ],
-  providers: [AiService],
+  providers: [],
   selector: 'gui-form-studio',
   templateUrl: './studio.component.html',
   styleUrl: './studio.component.scss',
@@ -78,10 +77,9 @@ const initialFormJson = () => {
 })
 export class FormStudioComponent {
   chatApiUrl = input('/api/chat');
-  quotaExceeded = output<QuotaInfo>();
-
+  unhandledStreamEvent = output<{ type: string; [key: string]: unknown }>();
   private cdr = inject(ChangeDetectorRef);
-  private ai = inject(AiService);
+  private ai = inject(AiService, { optional: true, skipSelf: true }) ?? new AiService();
   private designComp = viewChild<DesignComponent>('designComp');
   private chatHistory = viewChild<ElementRef<HTMLElement>>('chatHistory');
   protected activeTab: 'form' | 'json' | 'design' = 'form';
@@ -374,6 +372,8 @@ export class FormStudioComponent {
             if (last?.role === 'thinking') {
               last.content += event.text;
             }
+          } else if (event.type === 'thought_end') {
+            // unused for now
           } else if (event.type === 'tool_call') {
             this.messages.push({
               role: 'tool_call',
@@ -391,13 +391,8 @@ export class FormStudioComponent {
             }
           } else if (event.type === 'context_usage') {
             this.contextUsedPercent.set(event.usedPercent);
-          } else if (event.type === 'quota_exceeded') {
-            this.messages.push({
-              role: 'assistant',
-              isQuotaError: true,
-              content: 'AI usage limit reached.',
-            });
-            this.quotaExceeded.emit({ tier: event.tier, resetsAt: event.resetsAt });
+          } else {
+            this.unhandledStreamEvent.emit(event as { type: string; [key: string]: unknown });
           }
           this.scrollChatToBottom();
           this.cdr.detectChanges();
