@@ -10,12 +10,12 @@ Shared with the GolemUI Studio project.
 >
 > If you cloned this repo for your own use, feel free to restructure as needed.
 
-| File / Folder       | Purpose                                                    |
-| ------------------- | ---------------------------------------------------------- |
-| `ai.service.ts`     | HTTP + SSE streaming client; base class for PRO service    |
-| `public-api.ts`     | Barrel re-exporting the library's public surface           |
-| `studio/`           | `FormStudioComponent` -- the main AI form-builder UI       |
-| `design/`           | `DesignComponent` and `PropertiesPanelComponent`           |
-| `editor/`           | `EditorComponent` -- JSON/code editor pane                 |
-| `token-meter/`      | `TokenMeterComponent` -- context-window usage indicator    |
-| `typewriter/`       | `TypewriterComponent` -- animated text renderer            |
+| File / Folder   | Purpose                                                 |
+| --------------- | ------------------------------------------------------- |
+| `ai.service.ts` | HTTP + SSE streaming client; base class for PRO service |
+| `public-api.ts` | Barrel re-exporting the library's public surface        |
+| `studio/`       | `FormStudioComponent` -- the main AI form-builder UI    |
+| `design/`       | `DesignComponent` and `PropertiesPanelComponent`        |
+| `editor/`       | `EditorComponent` -- JSON/code editor pane              |
+| `token-meter/`  | `TokenMeterComponent` -- context-window usage indicator |
+| `typewriter/`   | `TypewriterComponent` -- animated text renderer         |
