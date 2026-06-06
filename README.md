@@ -43,9 +43,9 @@ This edition has no auth layer -- the studio opens directly. No D1, no KV, no se
 
 ## Scripts
 
-| Script                 | Description                                          |
-| ---------------------- | ---------------------------------------------------- |
-| `npm run dev`          | Start Angular + Wrangler Worker in watch mode        |
-| `npm run build`        | Production Angular build into `dist/browser/`        |
-| `npm run deploy`       | Build and deploy to Cloudflare Workers               |
-| `npm run cf-typegen`   | Regenerate `worker-configuration.d.ts`               |
+| Script               | Description                                                        |
+| -------------------- | ------------------------------------------------------------------ |
+| `npm run dev`        | Start Angular + Wrangler Worker in watch mode                      |
+| `npm run build`      | Production Angular build into `dist/browser/`                      |
+| `npm run deploy`     | Build and deploy to Cloudflare Workers (requires `wrangler login`) |
+| `npm run cf-typegen` | Regenerate `worker-configuration.d.ts`                             |
