@@ -72,13 +72,7 @@
             [class.user]="item.msg.role === 'user'"
             [class.assistant]="item.msg.role === 'assistant'"
           >
-            <div class="message-bubble" [class.quota-error-bubble]="item.msg.isQuotaError">
-              @if (item.msg.isQuotaError) {
-                <div class="quota-error-header">
-                  <i class="ph ph-warning-circle"></i>
-                  <span>Quota Exceeded</span>
-                </div>
-              }
+            <div class="message-bubble">
               @if (item.msg.attachments?.length) {
                 <div class="message-attachments">
                   @for (att of item.msg.attachments!; track att.name) {

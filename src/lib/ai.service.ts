@@ -11,45 +11,36 @@ export type ChatHistoryEntry = {
   parts: Array<{ text: string }>;
 };
 
-export interface GolemFormDef {
-  form: unknown[];
-}
-
-export interface QuotaInfo {
-  tier: string;
-  resetsAt: string;
-}
-
 export type StreamEvent =
   | { type: 'thought_start' }
   | { type: 'thought_delta'; text: string }
   | { type: 'thought_end' }
   | { type: 'tool_call'; name: string; input: Record<string, unknown> }
   | { type: 'tool_result'; name: string; errors: string[] }
-  | { type: 'context_usage'; usedPercent: number }
-  | { type: 'quota_exceeded'; tier: string; resetsAt: string };
+  | { type: 'context_usage'; usedPercent: number };
 
 @Injectable()
-export class AiService {
+export class AiService<TEvent extends { type: string } = StreamEvent> {
   async sendMessage(
     message: string,
     files: FileAttachment[] = [],
     history: ChatHistoryEntry[] = [],
     chatApiUrl: string,
-    onEvent?: (event: StreamEvent) => void,
-  ): Promise<GolemFormDef | undefined> {
+    onEvent?: (event: TEvent) => void,
+  ): Promise<{ form: unknown[] } | undefined> {
     const response = await fetch(chatApiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message, files, history }),
     });
 
-    if (response.status === 402) {
-      const body = (await response.json()) as { tier: string; resetsAt: string; error: string };
-      onEvent?.({ type: 'quota_exceeded', tier: body.tier, resetsAt: body.resetsAt });
-      return undefined;
-    }
+    return this.processResponse(response, onEvent as ((event: StreamEvent) => void) | undefined);
+  }
 
+  protected async processResponse(
+    response: Response,
+    onEvent?: (event: StreamEvent) => void,
+  ): Promise<{ form: unknown[] } | undefined> {
     if (!response.body) {
       return undefined;
     }
