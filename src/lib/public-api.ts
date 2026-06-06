@@ -3,3 +3,5 @@ export { DesignComponent } from './design/design.component';
 export { EditorComponent } from './editor/editor.component';
 export { TokenMeterComponent } from './token-meter/token-meter.component';
 export { TypewriterComponent } from './typewriter/typewriter.component';
+export { AiService } from './ai.service';
+export type { ChatHistoryEntry, FileAttachment, StreamEvent } from './ai.service';
