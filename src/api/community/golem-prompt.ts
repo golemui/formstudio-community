@@ -23,7 +23,7 @@ Required on every input widget additionally: \`path\` (dot-notation field bindin
       "children": [
         { "kind": "input",  "type": "textinput", "path": "email",    "label": "Email",    "validator": { "type": "string", "format": "email", "required": true } },
         { "kind": "input",  "type": "password",  "path": "password", "label": "Password" },
-        { "kind": "action", "type": "button",    "label": "Sign In", "on": { "click": "submit" } }
+        { "kind": "action", "type": "button",    "label": "Sign In", "actionType": "submit" }
       ]
     }
   ]
@@ -42,7 +42,7 @@ Required on every input widget additionally: \`path\` (dot-notation field bindin
           "props": { "options": [{ "label": "User", "value": "user" }, { "label": "Admin", "value": "admin" }] } },
         { "kind": "input", "type": "textinput", "path": "adminCode", "label": "Admin Code",
           "include": { "when": "$form.config?.user?.role === 'admin'" } },
-        { "kind": "action", "type": "button", "label": "Submit", "on": { "click": "submit" } }
+        { "kind": "action", "type": "button", "label": "Submit", "actionType": "submit" }
       ]
     }
   ]
@@ -53,7 +53,7 @@ Required on every input widget additionally: \`path\` (dot-notation field bindin
 
 - \`include\` / \`exclude\` use \`{ "when": "<expression>" }\`. Always use optional chaining (\`?.\`) for nested paths and return a boolean.
 - Expressions use \`$form.fieldPath\` to read sibling field values.
-- \`on\` holds event handlers: \`{ "click": "submit" }\`, \`{ "change": "reload" }\`, etc.
+- For the primary submit button use \`"actionType": "submit"\` (no handler needed). It fires the form's native \`formSubmit\` event. Use \`on.click\` only for non-submit action buttons (\`"actionType": "button"\`, the default), where the value is a handler name registered in the form config: \`{ "click": "reload" }\`.
 - \`flex\` for page scaffolding (use \`props.direction\` and \`props.gap\`). \`grid\` for form fields (CSS subgrid aligns labels and inputs across siblings).
 - For icons use Google Material Icons names.
 - Every widget, including those inside \`children\` arrays, must have a unique \`uid\` string. Use short kebab-case slugs that describe the widget (e.g. \`"email-input"\`, \`"submit-btn"\`, \`"address-grid"\`). The designer tool requires UIDs to identify and manipulate individual widgets.
@@ -68,9 +68,9 @@ When the user message starts with "Current form definition:", that JSON is the l
 
 ## Using the tools
 
-1. Call \`get_widget_spec\` before using any widget you are not sure about — it returns the widget's props, validator shape, and a working example.
-2. Call \`get_concept\` when you need to use named states or string interpolation.
-3. When your form is complete, call \`validate_form_definition\` on it. Fix every error it reports and re-validate until it returns \`{ "valid": true }\`.
+1. Call \`json_get_widget_spec\` before using any widget you are not sure about. It returns the widget's props, validator shape, and a working example.
+2. Call \`get_concept\` when you need a cross-cutting concept: named states, string interpolation, reactive scope (\`$form\`/\`$meta\`/\`$errors\`), or icons.
+3. When your form is complete, call \`json_validate_form_definition\` on it. Fix every error it reports and re-validate until it returns \`{ "valid": true }\`.
 
 Output the final JSON only after validation passes.
 `;

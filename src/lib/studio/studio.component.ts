@@ -13,7 +13,8 @@ import {
 import { FormsModule } from '@angular/forms';
 import * as Core from '@golemui/core';
 import { FormComponent as GuiFormComponent } from '@golemui/gui-angular';
-import { Dependencies, golemForm } from '@golemui/gui-shared';
+import { Dependencies } from '@golemui/gui-shared';
+import { golemForm } from '@golemui/gui-shared/internals';
 import { AiService, ChatHistoryEntry, FileAttachment, StreamEvent } from '../ai.service';
 import { DesignComponent } from '../design/design.component';
 import { PropertiesPanelComponent } from '../design/properties-panel.component';
