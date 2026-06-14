@@ -4,12 +4,12 @@ import type { Context } from 'hono';
 import { streamSSE } from 'hono/streaming';
 import {
   GET_CONCEPT_TOOL,
-  GET_WIDGET_SPEC_TOOL,
-  VALIDATE_FORM_DEFINITION_TOOL,
+  JSON_GET_WIDGET_SPEC_TOOL,
+  JSON_VALIDATE_FORM_DEFINITION_TOOL,
   getConcept,
   getWidgetSpec,
   validateFormDefinition,
-} from '@golemui/gui-mcp';
+} from '@golemui/gui-mcp/json';
 import { generatePrompt } from './golem-prompt';
 
 // ---------------------------------------------------------------------------
@@ -19,9 +19,10 @@ import { generatePrompt } from './golem-prompt';
 
 const TOOLS: Anthropic.Tool[] = [
   {
-    name: 'get_widget_spec',
-    description: GET_WIDGET_SPEC_TOOL.description,
-    input_schema: GET_WIDGET_SPEC_TOOL.inputSchema as unknown as Anthropic.Tool['input_schema'],
+    name: 'json_get_widget_spec',
+    description: JSON_GET_WIDGET_SPEC_TOOL.description,
+    input_schema:
+      JSON_GET_WIDGET_SPEC_TOOL.inputSchema as unknown as Anthropic.Tool['input_schema'],
   },
   {
     name: 'get_concept',
@@ -29,21 +30,21 @@ const TOOLS: Anthropic.Tool[] = [
     input_schema: GET_CONCEPT_TOOL.inputSchema as unknown as Anthropic.Tool['input_schema'],
   },
   {
-    name: 'validate_form_definition',
-    description: VALIDATE_FORM_DEFINITION_TOOL.description,
+    name: 'json_validate_form_definition',
+    description: JSON_VALIDATE_FORM_DEFINITION_TOOL.description,
     input_schema:
-      VALIDATE_FORM_DEFINITION_TOOL.inputSchema as unknown as Anthropic.Tool['input_schema'],
+      JSON_VALIDATE_FORM_DEFINITION_TOOL.inputSchema as unknown as Anthropic.Tool['input_schema'],
   },
 ];
 
 function executeTool(name: string, input: unknown): unknown {
-  if (name === 'get_widget_spec') {
+  if (name === 'json_get_widget_spec') {
     return getWidgetSpec(input as Parameters<typeof getWidgetSpec>[0]);
   }
   if (name === 'get_concept') {
     return getConcept(input as Parameters<typeof getConcept>[0]);
   }
-  if (name === 'validate_form_definition') {
+  if (name === 'json_validate_form_definition') {
     return validateFormDefinition({ formDefinition: input });
   }
   throw new Error(`Unknown tool: ${name}`);
@@ -219,7 +220,7 @@ export async function handleChatRequest<TBindings extends ChatEnv>(
               result = { error: (e as Error).message };
             }
 
-            if (block.name === 'validate_form_definition') {
+            if (block.name === 'json_validate_form_definition') {
               const vr = result as {
                 valid: boolean;
                 errors?: Array<{ path: string; message: string; suggestion?: string }>;

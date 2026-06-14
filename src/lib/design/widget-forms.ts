@@ -29,6 +29,7 @@ const VALIDATOR_TYPE_BY_WIDGET: Record<string, string> = {
   rangeDateInput: 'array',
   rangeDatePicker: 'array',
   repeater: 'array',
+  tags: 'array',
 };
 
 interface ValidatorFieldConfig {
